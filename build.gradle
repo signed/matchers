@@ -8,6 +8,9 @@ repositories {
 	mavenRepo urls: "http://localhost:8081/nexus/content/groups/public/"
 }
 
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.0-milestone-5'
+}
 
 dependencies {
     groovy group: 'org.codehaus.groovy', name: 'groovy', version: '1.8.3'
