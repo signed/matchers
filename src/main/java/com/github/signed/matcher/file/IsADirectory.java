@@ -27,6 +27,10 @@ public class IsADirectory extends TypeSafeMatcher<File>{
     @Override
     protected void describeMismatchSafely(File item, Description mismatchDescription) {
         mismatchDescription.appendValue(item);
-        mismatchDescription.appendText(" is a file");
+        if(item.exists()){
+            mismatchDescription.appendText(" is a file");
+        }else {
+            mismatchDescription.appendText(" does not exist");
+        }
     }
 }
