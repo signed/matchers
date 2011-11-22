@@ -2,6 +2,7 @@ apply plugin: 'java'
 apply plugin: 'groovy'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
+apply plugin: 'hamcrest'
 
 sourceCompatibility = 1.6
 
@@ -19,7 +20,7 @@ task trigger<<{
     def sourcePaths = sourceSets*.java.srcDirs.flatten().join(',')
     def destinationDir = new File(buildDir, 'generated-src')
     destinationDir.mkdirs()
-    def configurationFile = new File("src/main/resources/file-matchers.xml");
+    def configurationFile = new File("file-matchers.xml");
 
 //    println configurationFile.absolutePath
 //    println sourcePaths
