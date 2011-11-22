@@ -1,0 +1,6 @@
+<matchers>
+
+    <!-- file matchers -->
+    <factory class="com.github.signed.matcher.file.IsADirectory"/>
+
+</matchers>

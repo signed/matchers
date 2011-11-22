@@ -5,7 +5,6 @@ apply plugin: 'idea'
 
 sourceCompatibility = 1.6
 
-
 repositories {
     maven {
         url 'http://localhost:8081/nexus/content/groups/public/'
@@ -13,8 +12,29 @@ repositories {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '1.0-milestone-5'
+    gradleVersion = '1.0-milestone-6'
 }
+
+task trigger<<{
+    def sourcePaths = sourceSets*.java.srcDirs.flatten().join(',')
+    def destinationDir = new File(buildDir, 'generated-src')
+    destinationDir.mkdirs()
+    def configurationFile = new File("src/main/resources/file-matchers.xml");
+
+//    println configurationFile.absolutePath
+//    println sourcePaths
+//    println "com.github.signed.matcher.file.FileMatchers"
+//    println destinationDir.absolutePath
+//
+//    String [] args = [
+//            configurationFile.absolutePath
+//          , sourcePaths
+//          , "com.github.signed.matcher.file.FileMatchers"
+//          , destinationDir.absolutePath
+//          ].toArray()
+//    XmlConfigurator.main(args);
+}
+trigger.onlyIf { false }
 
 dependencies {
     groovy(
