@@ -8,26 +8,12 @@ task wrapper(type: Wrapper) {
     gradleVersion = '1.0-milestone-6'
 }
 
-task trigger<<{
-    def sourcePaths = sourceSets*.java.srcDirs.flatten().join(',')
-    def destinationDir = new File(buildDir, 'generated-src')
-    destinationDir.mkdirs()
-    def configurationFile = new File("file-matchers.xml");
+group='com.github.signed.matcher.file'
 
-//    println configurationFile.absolutePath
-//    println sourcePaths
-//    println "com.github.signed.matcher.file.FileMatchers"
-//    println destinationDir.absolutePath
-//
-//    String [] args = [
-//            configurationFile.absolutePath
-//          , sourcePaths
-//          , "com.github.signed.matcher.file.FileMatchers"
-//          , destinationDir.absolutePath
-//          ].toArray()
-//    XmlConfigurator.main(args);
+hamcrest{
+    configurationFile='file-matchers.xml'
+    nameForMatcherClass='FileMatchers'
 }
-trigger.onlyIf { false }
 
 dependencies {
     groovy(
