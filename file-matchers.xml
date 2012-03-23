@@ -2,5 +2,6 @@
 
     <!-- file matchers -->
     <factory class="com.github.signed.matcher.file.IsADirectory"/>
+    <factory class="com.github.signed.matcher.file.IsEmptyDirectory"/>
 
 </matchers>
