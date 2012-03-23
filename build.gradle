@@ -4,8 +4,18 @@ apply plugin: 'hamcrest'
 
 sourceCompatibility = 1.6
 
+repositories {
+    mavenCentral()
+}
+
+idea {
+    project {
+        jdkName = '1.6'
+    }
+}
+
 task wrapper(type: Wrapper) {
-    gradleVersion = '1.0-milestone-6'
+    gradleVersion = '1.0-milestone-9'
 }
 
 group='com.github.signed.matcher.file'
