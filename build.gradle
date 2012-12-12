@@ -16,7 +16,7 @@ idea {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '1.0'
+    gradleVersion = '1.3'
 }
 
 group='com.github.signed.matcher.file'
