@@ -1,13 +1,13 @@
 package com.github.signed.matcher.file;
 
+import org.hamcrest.CoreMatchers;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
-import org.hamcrest.Matchers;
 import org.hamcrest.TypeSafeMatcher;
 
 import java.io.File;
 
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.CoreMatchers.is;
 
 public class IsFileWith extends TypeSafeMatcher<File>{
 
@@ -22,7 +22,7 @@ public class IsFileWith extends TypeSafeMatcher<File>{
     }
 
     public static Matcher<File> isAFile(Matcher<File> file){
-        return Matchers.allOf(IsFile.isAFile(), file);
+        return CoreMatchers.allOf(IsFile.isAFile(), file);
     }
 
     public IsFileWith(Matcher<String> nameMatcher) {

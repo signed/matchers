@@ -1,7 +1,0 @@
-dependencies {
-    compile gradleApi()
-    groovy localGroovy()
-    compile(
-            ['com.github.signed.gradle.plugin:hamcrest-generator-source:0.0.1-SNAPSHOT']
-    )
-}

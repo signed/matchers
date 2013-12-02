@@ -15,8 +15,6 @@ public class IsFileWith_Test {
 
     @Test
     public void combineTest2() throws Exception {
-        //assertThat(folder.newFile("number one"), isAFile(IsFileWith.withName(endsWith("one"))));
-        //assertThat(folder.newFile("number one"), isAFile(withName(endsWith("two"))));
-        assertThat(folder.newFile("number one"), withName("number two"));
+        assertThat(folder.newFile("number one"), withName("number one"));
     }
 }
