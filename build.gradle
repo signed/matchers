@@ -20,6 +20,7 @@ sourceCompatibility = 1.6
 repositories {
     mavenLocal()
     mavenCentral()
+    jcenter()
 }
 
 idea {
@@ -29,7 +30,7 @@ idea {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '1.9'
+    gradleVersion = '2.0'
 }
 
 group = 'com.github.signed.matcher.file'
