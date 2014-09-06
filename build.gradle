@@ -3,19 +3,23 @@ apply plugin: 'groovy'
 apply plugin: 'hamcrest'
 apply plugin: 'idea'
 apply plugin: 'maven'
+apply plugin: 'nexus'
 
 buildscript {
     repositories {
         mavenLocal()
         mavenCentral()
+        jcenter()
     }
 
     dependencies {
         classpath 'com.github.signed.gradle.plugin:gradle-hamcrest-plugin:0.0.2'
+        classpath 'org.gradle.api.plugins:gradle-nexus-plugin:0.7.1'
     }
 }
 
-sourceCompatibility = 1.6
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
 
 repositories {
     mavenLocal()
@@ -25,7 +29,7 @@ repositories {
 
 idea {
     project {
-        jdkName = '1.6'
+        jdkName = '1.7'
     }
 }
 
@@ -34,7 +38,7 @@ task wrapper(type: Wrapper) {
 }
 
 group = 'com.github.signed.matcher.file'
-version = '0.0.1'
+version = '0.1.0-SNAPSHOT'
 
 hamcrest {
     configurationFile = 'file-matchers.xml'
@@ -49,4 +53,73 @@ dependencies {
             'junit:junit:4.11'
             , 'org.mockito:mockito-core:1.9.0'
     )
+}
+
+
+modifyPom {
+    project {
+        name 'File Matchers'
+        description 'A collection of matchers for java files'
+        url 'https://github.com/signed/matchers'
+        inceptionYear '2014'
+
+        scm {
+            url 'https://github.com/signed/matchers'
+            connection 'scm:https://github.com/signed/matchers.git'
+            developerConnection 'scm:git@github.com:signed/matchers.git'
+        }
+
+        licenses {
+            license {
+                name 'The Apache Software License, Version 2.0'
+                url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                distribution 'repo'
+            }
+        }
+
+        developers {
+            developer {
+                id 'thomasheilbronner'
+                name 'Thomas Heilbronner'
+            }
+        }
+    }
+}
+
+def environments = [
+        'local': [
+                repositoryLogin: deploymentNexusLocalLogin,
+                repositoryPassword: deploymentNexusLocalPassword,
+                'urls': [
+                        'snapshot': 'http://localhost:8081/nexus/content/repositories/snapshots',
+                        'release' : 'http://localhost:8081/nexus/content/repositories/releases'
+
+                ]
+        ],
+        'sonatype': [
+                repositoryLogin: deploymentSonatypeLogin,
+                repositoryPassword: deploymentSonatypePassword,
+                'urls': [
+                        'snapshot': 'https://oss.sonatype.org/content/repositories/snapshots',
+                        'release' : 'https://oss.sonatype.org/service/local/staging/deploy/maven2'
+                ]
+        ]
+]
+
+def intent = hasProperty('release') ? 'release' : 'snapshot'
+def target = hasProperty('sonatype') ? 'sonatype' : 'local'
+println "intent: $intent target: $target url: ${environments.get(target).urls.get(intent)}"
+
+def environment = environments.get(target)
+if (project.hasProperty('release')) {
+    project.version -= '-SNAPSHOT'
+}
+
+ext.nexusUsername = environment.repositoryLogin
+ext.nexusPassword = environment.repositoryPassword
+
+nexus {
+    sign = true
+    repositoryUrl = environment.urls.release
+    snapshotRepositoryUrl = environment.urls.snapshot
 }
